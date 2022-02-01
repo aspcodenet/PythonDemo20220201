@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect
-from models import db, Person, seedData,UserRegistration
+from models import db, Person, seedData,UserRegistration, CreditCard
 from flask_migrate import Migrate, upgrade
 from random import randint
 from forms import PersonEditForm, PersonNewForm, UserRegistrationForm
@@ -22,7 +22,9 @@ def hejPage():
     lista = ["Stefan", "Oliver", "Josefine"]
     return render_template('hej.html', inloggad=True, lista=lista,age=49, name="Stefan")
 
-
+@app.route("/players")
+def getPlayers():
+    return "Namn:Stefan, Adress:Testgatan 12"
 
 @app.route("/")
 def indexPage():
@@ -128,6 +130,14 @@ def personNewPage():
         return redirect(url_for('personerPage'))
 
     return render_template('personnew.html',form=form)
+
+
+@app.route("/person/cards/<id>",methods=["GET", "POST"])  
+def cardPage(id):
+    personFromDb = Person.query.filter(Person.id == id).first()
+    cards = CreditCard.query.filter(CreditCard.PersonId == id).order_by(CreditCard.Datum.desc())
+    paginationObject = cards.paginate(1,5,False)
+    return render_template('cardPage.html',person=personFromDb, cards=paginationObject.items)
 
 
 @app.route("/person/<id>",methods=["GET", "POST"])  # EDIT   3

@@ -1,0 +1,46 @@
+{% extends "basetemplate.html" %}
+
+{% block title %}
+Startsidan
+{% endblock %}
+
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <h1>Kort för {{ person.namn }}</h1>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <tr>
+                <th>Typ
+                </th>
+                <th>Kortnummer
+                </th>
+                <th>Datum
+                </th>
+            </tr>
+            {% for theCard in  cards%}                    
+                <tr>
+                    <td>{{ theCard.cardtype }}</td>
+                    <td>{{ theCard.number }}</td>
+                    <td>{{ theCard.Datum }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        
+
+
+            <a class="btn" href="#">Show 5 more</a>
+
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}
+

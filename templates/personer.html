@@ -45,6 +45,7 @@ Visar sidan {{ page }} av totalt {{ pages }}
                     </a>
                 </th>
                 <th></th>
+                <th></th>
             </tr>
             {% for person in allaPersoner %}      
                 <tr>
@@ -53,6 +54,9 @@ Visar sidan {{ page }} av totalt {{ pages }}
                     <td>{{ person.city }}</td>
                     <td>
                         <a href="{{ url_for('personPage', id=person.id )  }}"><i class='bx bx-edit'></i></a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('cardPage', id=person.id )  }}"><i class='bx bx-credit-card'></i></a>
                     </td>
                 </tr>
             {% endfor %}
@@ -78,6 +82,7 @@ Visar sidan {{ page }} av totalt {{ pages }}
                         {% endif %}
 
                     </td>
+                    <td></td>
                 </tr>
             </tfooter>
         </table>
