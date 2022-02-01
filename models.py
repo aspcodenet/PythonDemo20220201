@@ -121,3 +121,6 @@ def AddLoginIfNotExists(email:str, passwd:str, roles:list[str]):
 
     db.session.add(user)
     db.session.commit()
+
+if __name__ == "__main__":
+    print("hej")
