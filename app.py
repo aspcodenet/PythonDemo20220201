@@ -119,7 +119,12 @@ def personNewPage():
     if request.method == "GET":
         return render_template('personnew.html',form=form)
 
-    if form.validate_on_submit():
+    postnr = int(form.postalcode.data)
+    if postnr > 88888:
+        # felmeddelande
+        # lägga in ett till error i form.postalcode
+        pass
+    elif form.validate_on_submit():
         personFromDb = Person()
         personFromDb.namn = form.name.data
         personFromDb.city = form.city.data 
@@ -127,9 +132,9 @@ def personNewPage():
         personFromDb.position = form.position.data
         db.session.add(personFromDb)
         db.session.commit()
-        return redirect(url_for('personerPage'))
+        return redirect(url_for('personerPage')) # 302
 
-    return render_template('personnew.html',form=form)
+    return render_template('personnew.html',form=form) #200
 
 
 # ?page=4
