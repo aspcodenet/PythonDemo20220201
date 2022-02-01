@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, jsonify
 from models import db, Person, seedData,UserRegistration, CreditCard
 from flask_migrate import Migrate, upgrade
 from random import randint
@@ -131,6 +131,20 @@ def personNewPage():
 
     return render_template('personnew.html',form=form)
 
+
+# ?page=4
+@app.route("/api/<id>/cards")
+def personCards(id):
+    page = int(request.args.get('page',2))
+    listaMedCards = []
+    cards = CreditCard.query.filter(CreditCard.PersonId == id).order_by(CreditCard.Datum.desc())
+    paginationObject = cards.paginate(page,5,False)
+    # cards innehåller de 5 cardobjekt som ska visas
+    for card in paginationObject.items:
+        c = { "number": card.number, "cardtype": card.cardtype, "datum": card.Datum }
+        listaMedCards.append(c)
+    return jsonify(listaMedCards)
+    
 
 @app.route("/person/cards/<id>",methods=["GET", "POST"])  
 def cardPage(id):
